@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Llkser's Bookshelf</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/mystyle.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Llkser's Bookshelf</a>
+              
+              <form class="navbar-form navbar-right">
+                <button class="btn btn-primary">Sign in</button>
+                <button class="btn btn-success">Sign up</button>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar" id="sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Book store<span class="sr-only">(current)</span></a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">My shelf</a></li>
+            <li><a href="">Read</a></li>
+            <li><a href="">Unread</a></li>
+            <li><a href="">Favor</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Profile</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+          <!--{% block content %}{% endblock %}-->
+          
+          <hr class="featurette-divider">
+
+          <div class="tm-page-footer">
+            <p class="pull-right tm-copyright-text"><a href="#">Back to top</a></p>
+            <p class="tm-copyright-text">This work is for study. Copyright © <em>Liu Kang</em>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+  </body>
+</html>
