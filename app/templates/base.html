@@ -25,10 +25,16 @@
               </button>
               <a class="navbar-brand" href="#">Llkser's Bookshelf</a>
               
+              {% if username %}
               <form class="navbar-form navbar-right">
-                <button class="btn btn-primary">Sign in</button>
-                <button class="btn btn-success">Sign up</button>
+                <h4>&nbsp {{ username }} &nbsp&nbsp&nbsp&nbsp<a href='/logout'>logout</a></h4>
               </form>
+              {% else %}
+              <form class="navbar-form navbar-right">
+                <a href="/signin"><button class="btn btn-primary" type="button">Sign in</button></a>
+                <a href="/signup"><button class="btn btn-success" type="button">Sign up</button></a>
+              </form>
+              {% endif %}
             </div>
           </div>
         </nav>
@@ -37,22 +43,26 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" id="sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Book store<span class="sr-only">(current)</span></a></li>
+          {% if sidebar==1 %}<li class="active">{% else %}<li>{% endif %}<a href="/">Book store</a></li>
+          </ul>
+          {% if username %}
+          <ul class="nav nav-sidebar">
+            {% if sidebar==2 %}<li class="active">{% else %}<li>{% endif %}<a href="/myshelf">My shelf</a></li>
+            {% if sidebar==3 %}<li class="active">{% else %}<li>{% endif %}<a href="/showRead">Read</a></li>
+            {% if sidebar==4 %}<li class="active">{% else %}<li>{% endif %}<a href="/showUnread">Unread</a></li>
+            {% if sidebar==5 %}<li class="active">{% else %}<li>{% endif %}<a href="/showFavor">Favor</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">My shelf</a></li>
-            <li><a href="">Read</a></li>
-            <li><a href="">Unread</a></li>
-            <li><a href="">Favor</a></li>
+            {% if sidebar==6 %}<li class="active">{% else %}<li>{% endif %}<a href="/profile">Profile</a></li>
+            {% if authority %}
+            {% if sidebar==0 %}<li class="active">{% else %}<li>{% endif %}<a href="/console">Console</a></li>
+            {% endif %}
           </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Profile</a></li>
-            <li><a href="">Console</a></li>
-          </ul>
+          {% endif %}
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-          <!--{% block content %}{% endblock %}-->
+          {% block bookstore %}{% endblock %}
           
           <hr class="featurette-divider">
 

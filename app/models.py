@@ -13,8 +13,8 @@ class User(db.Model):
 class Book(db.Model):
     BookID=db.Column(db.Integer, primary_key=True)
     BookName=db.Column(db.String(250))
+    Writer=db.Column(db.String(250))
     Description=db.Column(db.String(250))
-    Cover=db.Column(db.String(250))
 
 class Bookshelf(db.Model):
     ShelfID=db.Column(db.Integer, primary_key=True)
