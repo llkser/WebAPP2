@@ -2,42 +2,30 @@
 
 {% block bookstore %}
 
-<form class="navbar-form navbar-right">
-    <input type="text" class="form-control" placeholder="Book or writer name">
-    <button class="btn btn-primary" type="submit">Search</button>
+<form method="POST">
+    <label>UserName</label>
+    <input class="form-control" type="text" placeholder={{ user.UserName }} style="width:40%;" disabled>
+    <label>Email</label>
+    {% if user.Email %}
+    <input class="form-control" type="email" placeholder={{ user.Email }} name="email" style="width:40%;">
+    {% else %}
+    <input class="form-control" type="email" placeholder='' name="email" style="width:40%;">
+    {% endif %}
+    <label>Phone Number</label>
+    {% if user.Phonenumber %}
+    <input class="form-control" type="text" placeholder={{ user.Phonenumber }} name="Phonenumber" style="width:40%;">
+    {% else %}
+    <input class="form-control" type="text" placeholder='' name="Phonenumber" style="width:40%;">
+    {% endif %}
+    <label>QQ Number</label>
+    {% if user.QQnumber %}
+    <input class="form-control" type="text" placeholder={{ user.QQnumber }} name="QQnumber" style="width:40%;">
+    {% else %}
+    <input class="form-control" type="text" placeholder='' name="QQnumber" style="width:40%;">
+    {% endif %}
+    <br>
+    <button type="submit" class="btn btn-success">Update</button>
+    <a href="/change_password"><button type="button" class="btn btn-primary">Change Password</button></a>
 </form>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Writer</th>
-            <th>Description</th>
-            {% if username %} <th>Add to shelf</th> {% endif %}
-        </tr>
-    </thead>
-
-    <tbody>
-        {% for Book in Bookstore %}
-        <tr>
-            <td>{{Book.BookName}}</td>
-            <td>{{Book.Writer}}</td>
-            <td>{{Book.Description}}</td>
-            {% if username %}
-            <td><a href="/add_book/{{Book.BookID}}"><button type="button" class="btn btn-primary">Add</button></a></td>
-            {% endif %}
-            
-        </tr>
-        {% endfor %}
-        {% if authority %}
-        <tr>
-            <td>...</td>
-            <td></td>
-            <td></td>
-            <td><a href="/add_book"><button type="button" class="btn btn-primary">Add</button></a></td>
-        </tr>
-        {% endif %}
-    </tbody>
-</table>
 
 {% endblock %}

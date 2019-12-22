@@ -16,7 +16,6 @@
             {% if username %} <th>Add to shelf</th> {% endif %}
             {% if authority %}
             <th></th>
-            <th></th>
             {% endif %}
         </tr>
     </thead>
@@ -35,7 +34,6 @@
                 {% endif %}
             {% endif %}
             {% if authority %}
-            <td><a href="/edit_book/{{Book.BookID}}"><button type="button" class="btn btn-primary">Edit</button></a></td>
             <td><a href="/delete_store_book/{{Book.BookID}}"><button type="button" class="btn btn-primary">Delete</button></a></td>
             {% endif %}
         </tr>
@@ -46,8 +44,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td><a href="/add_book"><button type="button" class="btn btn-primary">Add Book</button></a></td>
+            <td><a href="/add_book_to_store"><button type="button" class="btn btn-primary">Add Book</button></a></td>
         </tr>
         {% endif %}
     </tbody>

@@ -7,7 +7,6 @@ class User(db.Model):
     Email=db.Column(db.String(250))
     Phonenumber=db.Column(db.String(250))
     QQnumber=db.Column(db.String(250))
-    Avater=db.Column(db.String(250))
     Authority=db.Column(db.Integer)
 
 class Book(db.Model):
