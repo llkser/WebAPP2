@@ -2,8 +2,8 @@
 
 {% block bookstore %}
 
-<form class="navbar-form navbar-right">
-    <input type="text" class="form-control" placeholder="Book or writer name">
+<form class="navbar-form navbar-right" method="POST">
+    <input type="text" class="form-control" placeholder='Book or writer name' name="searchText">
     <button class="btn btn-primary" type="submit">Search</button>
 </form>
 
@@ -11,9 +11,13 @@
     <thead>
         <tr>
             <th>Title</th>
-            <th>writer</th>
+            <th>Writer</th>
             <th>Description</th>
             {% if username %} <th>Add to shelf</th> {% endif %}
+            {% if authority %}
+            <th></th>
+            <th></th>
+            {% endif %}
         </tr>
     </thead>
 
@@ -24,10 +28,28 @@
             <td>{{Book.Writer}}</td>
             <td>{{Book.Description}}</td>
             {% if username %}
-            <td><a href="/add_book/{{Book.BookID}}"><button type="button" class="btn btn-primary">add</button></a></td>
+                {% if Book.BookName in shelf %}
+                <td><button type="button" class="btn btn-default">Added</button></a></td>
+                {% else %}
+                <td><a href="/add_book/{{Book.BookID}}"><button type="button" class="btn btn-primary">Add</button></a></td>
+                {% endif %}
+            {% endif %}
+            {% if authority %}
+            <td><a href="/edit_book/{{Book.BookID}}"><button type="button" class="btn btn-primary">Edit</button></a></td>
+            <td><a href="/delete_store_book/{{Book.BookID}}"><button type="button" class="btn btn-primary">Delete</button></a></td>
             {% endif %}
         </tr>
         {% endfor %}
+        {% if authority %}
+        <tr>
+            <td>...</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a href="/add_book"><button type="button" class="btn btn-primary">Add Book</button></a></td>
+        </tr>
+        {% endif %}
     </tbody>
 </table>
 

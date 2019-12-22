@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block bookstore %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Writer</th>
+            <th>Description</th>
+            <th>Read</th>
+            <th>Favor</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for Book in Bookshelf %}
+        <tr>
+            <td>{{Book.BookName}}</td>
+            <td>{{Book.Writer}}</td>
+            <td>{{Book.Description}}</td>
+            {% if read[Book.BookID] %}
+            <td><a href="/set_unread/{{Book.BookID}}"><button type="button" class="btn btn-default">Y</button></a></td>
+            {% else %}
+            <td><a href="/set_read/{{Book.BookID}}"><button type="button" class="btn btn-primary">N</button></a></td>
+            {% endif %}
+            {% if favor[Book.BookID] %}
+            <td><a href="/set_unfavor/{{Book.BookID}}"><button type="button" class="btn btn-default">★</button></a></td>
+            {% else %}
+            <td><a href="/set_favor/{{Book.BookID}}"><button type="button" class="btn btn-primary">☆</button></a></td>
+            {% endif %}
+            <td><a href="/delete_shelf_book/{{Book.BookID}}"><button type="button" class="btn btn-primary">Remove</button></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
