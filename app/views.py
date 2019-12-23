@@ -166,6 +166,35 @@ def add_book(bookID):
     else:
         return render_template('404.html'), 404
 
+@app.route('/add_book_to_store', methods=['GET','POST'])
+def add_book_to_store():
+    if 'username' in session and session['authority']:
+        if request.method=='GET':
+            return render_template('addBooktoStore.html')
+        else:
+            bookname=request.form.get('bookname')
+            writer=request.form.get('writer')
+            description=request.form.get('description')
+            if bookname and writer and description:
+                if Book.query.count():
+                    maxID = Book.query.order_by(desc('BookID')).first().BookID
+                else:
+                    maxID=0
+                book=Book(BookID=maxID+1,
+                    BookName=bookname,
+                    Writer=writer,
+                    Description=description
+                )
+                db.session.add(book)
+                db.session.commit()
+                return redirect('/')
+            else:
+                return render_template('addBooktoStore.html',
+                        warning='Input can not be empty!'
+                )
+    else:
+        return render_template('404.html'), 404
+
 @app.route('/myshelf')
 def myshelf():
     if 'username' in session:
@@ -266,7 +295,6 @@ def profile():
         email=request.form.get('email')
         Phonenumber=request.form.get('Phonenumber')
         QQnumber=request.form.get('QQnumber')
-        print(email)
         user=User.query.filter(User.UserName==session['username']).first()
         user.Email=email
         user.Phonenumber=Phonenumber
@@ -373,7 +401,35 @@ def showFavor():
     else:
         return render_template('404.html'), 404
 
-
+@app.route('/change_password', methods=['GET','POST'])
+def change_password():
+    if 'username' in session:
+        if request.method=='GET':
+            return render_template('changePassword.html')
+        else:
+            oldPassword=request.form.get('oldPassword')
+            newPassword=request.form.get('newPassword')
+            confirmedPassword=request.form.get('confirmedPassword')
+            if len(oldPassword)>=8 and len(newPassword)>=8 and len(confirmedPassword)>=8:
+                user=User.query.filter(User.UserName==session['username']).first()
+                if oldPassword!=user.Password:
+                    render_template('changePassword.html',
+                        warning='Wrong Password!'
+                    )
+                elif newPassword!=confirmedPassword:
+                    return render_template('changePassword.html',
+                        warning='Confirmed Password not Match!'
+                    )
+                else:
+                    user.Password=newPassword
+                    db.session.commit()
+                    return redirect('/profile')
+            else:
+                render_template('changePassword.html',
+                        warning='Password can not be less than 8 letters!'
+                )
+    else:
+        return render_template('404.html'), 404
 
 @app.errorhandler(404)
 def page_not_found(e):
