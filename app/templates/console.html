@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block bookstore %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>Authority</th>
+            <th>Operation</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for user in Users %}
+        <tr>
+            <td>{{user.UserName}}</td>
+            {% if user.Authority==2 %}<td>root</td>{% endif %}
+            {% if user.Authority==1 %}<td>admin</td>{% endif %}
+            {% if user.Authority==0 %}<td>user</td>{% endif %}
+            {% if authority==2 %}
+            {% if user.Authority==0 %}
+            <td><a href="/change_authority/{{user.UserID}}"><button type="button" class="btn btn-primary">Set to admin</button></a></td>
+            {% elif user.Authority==1 %}
+            <td><a href="/change_authority/{{user.UserID}}"><button type="button" class="btn btn-primary">Set to user</button></a></td>
+            {% endif %}
+            {% endif %}
+            {% if user.Authority<authority %}
+            <td><a href="/delete_user/{{user.UserID}}"><button type="button" class="btn btn-primary">Remove</button></a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

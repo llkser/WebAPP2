@@ -113,11 +113,12 @@ def signup():
         password=request.form.get('password')
         email=request.form.get('email')
         if username and password and email:
+            user=User.query.filter(User.UserName==username).first()
             if len(password)<8:
                 return render_template('signup.html',
                     warning='Password can not be less than 8 letters!'
                 )
-            elif User.query.filter(User.UserName==username):
+            elif user:
                 return render_template('signup.html',
                     warning='User name already be signed up!'
                 )
@@ -428,6 +429,45 @@ def change_password():
                 render_template('changePassword.html',
                         warning='Password can not be less than 8 letters!'
                 )
+    else:
+        return render_template('404.html'), 404
+
+@app.route('/siteConsole')
+def siteConsole():
+    if 'username' in session and session['authority']:
+        user=User.query.order_by(desc('Authority')).all()
+        return render_template('console.html',
+                        sidebar=0,
+                        username=session['username'],
+                        authority=session['authority'],
+                        Users=user
+                )
+    else:
+        return render_template('404.html'), 404
+
+@app.route('/delete_user/<UserID>')
+def delete_user(UserID):
+    if 'username' in session:
+        user=User.query.filter(User.UserID==UserID).first()
+        if user.Authority<session['authority']:
+            db.session.delete(user)
+            db.session.commit()
+            return redirect('/siteConsole')
+        else:
+            return render_template('404.html'), 404
+    else:
+        return render_template('404.html'), 404
+
+@app.route('/change_authority/<UserID>')
+def change_authority(UserID):
+    if 'username' in session and session['authority']==2:
+        user=User.query.filter(User.UserID==UserID).first()
+        if user.Authority:
+            user.Authority=0
+        else:
+            user.Authority=1
+        db.session.commit()
+        return redirect('/siteConsole')
     else:
         return render_template('404.html'), 404
 
